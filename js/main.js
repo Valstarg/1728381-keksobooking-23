@@ -4,7 +4,7 @@
 // При не соблюдении условий выводится предупредительное сообщение.
 
 function getRandomNumber(from, before) {
-  let randomNumber = Math.random() * (before - from + 1) + from;
+  const randomNumber = Math.random() * (before - from + 1) + from;
   if (from >= 0 && before > 0 && from <= before) {
     return Math.floor(randomNumber);
   }
@@ -22,8 +22,8 @@ getRandomNumber(0, 10);
 // При не соблюдении условий выводится предупредительное сообщение.
 
 function getRandomFracter(from, before, accuracy) {
-  let initialValue = Math.random() * (before - from) + from;
-  let randomFracter = parseFloat(initialValue.toFixed(accuracy));
+  const initialValue = Math.random() * (before - from) + from;
+  const randomFracter = parseFloat(initialValue.toFixed(accuracy));
   if (from >= 0 && before > 0 && from <= before && 10 >= accuracy > 0) {
     return randomFracter;
   }
