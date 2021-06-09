@@ -23,12 +23,12 @@ getRandomNumber(0, 10);
 
 function getRandomFracter(from, before, accuracy) {
   let initialValue = Math.random() * (before - from) + from;
-  let randomFracter = parseFloat(initialValue.toFixed(accuracy))
+  let randomFracter = parseFloat(initialValue.toFixed(accuracy));
   if (from >= 0 && before > 0 && from <= before && 10 >= accuracy > 0) {
-  return randomFracter;
+    return randomFracter;
   }
   else {
-    return 'Введённые данные не соответствуют условиям.'
+    return 'Введённые данные не соответствуют условиям.';
   }
 }
 getRandomFracter(0, 5, 5);
