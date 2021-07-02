@@ -2,6 +2,12 @@
 
 const PRICE_MIN = 1000;
 const PRICE_MAX = 5000;
+const LAT_MIN = 35.65000;
+const LAT_MAX = 35.70000;
+const LNG_MIN = 139.70000;
+const LNG_MAX = 139.80000;
+const ACCURACY = 5;
+const NUMBER_OF_ADS = 10;
 
 const type = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const checkin = ['12:00', '13:00', '14:00'];
@@ -61,7 +67,6 @@ function getRandomArray(array) {
   const arrayNew = [];
   let arrayRandomNumber = 0;
 
-  // eslint-disable-next-line id-length
   for (let i = 0; i < randomNumber; i++) {
     arrayRandomNumber = getRandomNumber(0, arrayClone.length - 1);
     arrayNew[i] = arrayClone[arrayRandomNumber];
@@ -72,24 +77,20 @@ function getRandomArray(array) {
 
 // Генерация массива со случайными элементами по данным из других массивов.
 
-const location = {
-  lat: getRandomFracter(35.65000, 35.70000, 5),
-  lng: getRandomFracter(139.70000, 139.80000, 5),
-};
-
 function createDataArray() {
   const randomData = [];
-  // eslint-disable-next-line id-length
-  for (let j = 0; j < 10; j++) {
-    randomData[j] = {
+  for (let j = 0; j < NUMBER_OF_ADS; j++) {
+    const location = {
+      lat: getRandomFracter(LAT_MIN, LAT_MAX, ACCURACY),
+      lng: getRandomFracter(LNG_MIN, LNG_MAX, ACCURACY),
+    };
+    randomData.push({
       author: {
-        //avatar: 'img/avatars/user' + ('0' + (j + 1)).slice(-2) + '.png',    Не могу понять почему ругается линтер.
-        avatar: `img/avatars/user${ (`0${ j + 1 }`).slice(-2)  }.png`,
+        avatar: `img/avatars/user${ (`0${ j + 1 }`).slice(-2) }.png`,
       },
       offer: {
         title: 'Заголовок предложения.',
-        //address: 'Широта: ' + location.lat + ', ' + 'долгота: ' + location.lng,    Тоже самое.
-        address: `Широта: ${ location.lat }, долгота: ${ location.lng }`,
+        address: `${ location.lat }, ${ location.lng }`,
         price: getRandomNumber(PRICE_MIN, PRICE_MAX),
         type: getRandomArrayElement(type),
         rooms: getRandomNumber(1, 5),
@@ -101,12 +102,12 @@ function createDataArray() {
         photos: getRandomArray(photos),
       },
       location: {
-        lat: getRandomFracter(35.65000, 35.70000, 5),
-        lng: getRandomFracter(139.70000, 139.80000, 5),
+        lat: getRandomFracter(LAT_MIN, LAT_MAX, ACCURACY),
+        lng: getRandomFracter(LNG_MIN, LNG_MAX, ACCURACY),
       },
-    };
+    });
   }
   return randomData;
 }
 
-createDataArray(10);
+createDataArray(NUMBER_OF_ADS);
