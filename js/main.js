@@ -111,3 +111,5 @@ function createDataArray() {
 }
 
 createDataArray(NUMBER_OF_ADS);
+
+// Видел сообщение об обновлении линтера. Совсем забыл обновиться. Исправил.
