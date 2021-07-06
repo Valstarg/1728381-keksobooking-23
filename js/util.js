@@ -58,4 +58,24 @@ function getRandomArray(array) {
   return arrayNew;
 }
 
-export {getRandomNumber, getRandomFracter, getRandomArrayElement, getRandomArray};
+// Проверка на наличие текстового контента внутри элемента.
+// Если текста нет, элемент удаляется.
+
+function checkTextContent(element) {
+  if (element.textContent === '') {
+    element.remove();
+  }
+  return element;
+}
+
+// Проверка на наличие дочерних элементов в родителе.
+// Если дочерних элементов нет, родитель удаляется.
+
+function checkChildrenElements(parent) {
+  if (parent.children.length === 0) {
+    parent.remove();
+  }
+  return parent;
+}
+
+export {getRandomNumber, getRandomFracter, getRandomArrayElement, getRandomArray, checkTextContent, checkChildrenElements};
