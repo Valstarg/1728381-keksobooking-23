@@ -1,5 +1,4 @@
 import {createDataArray} from './data.js';
-import {checkTextContent, checkChildrenElements} from './util.js';
 
 // ПЕРЕМЕННЫЕ, МАССИВЫ, ОБЪЕКТЫ.
 
@@ -11,71 +10,89 @@ const typeRu = {
   hotel: 'Отель',
 };
 
-const mapCanvas = document.querySelector('#map-canvas');
+const mapCanvas = document.querySelector('.map__canvas');
 const cardTemplate = document.querySelector('#card').content;
 const similarPopup = cardTemplate.querySelector('.popup');
-const generatedAdsArray = createDataArray();
+const similarData = createDataArray;
 
 // ФУНКЦИИ.
 
-// Заполнение объявлений данными.
+// Заполнение объявления данными.
 
-generatedAdsArray.forEach((address) => {
-  const addressElement = similarPopup.cloneNode(true);
+function getAds(element) {
+  const adsElement = similarPopup.cloneNode(true);
 
-  const addressAvatar = addressElement.querySelector('.popup__avatar');
-  addressAvatar.src = address.author.avatar;
+  const adsAvatar = adsElement.querySelector('.popup__avatar');
+  adsAvatar.src = element.author.avatar;
+  if (!element.author.avatar) {
+    adsAvatar.remove();
+  }
 
-  const addressTitle = addressElement.querySelector('.popup__title');
-  addressTitle.textContent = address.offer.title;
+  const adsTitle = adsElement.querySelector('.popup__title');
+  adsTitle.textContent = element.offer.title;
+  if (!element.offer.title) {
+    adsTitle.remove();
+  }
 
-  const addressTextAddress = addressElement.querySelector('.popup__text--address');
-  addressTextAddress.textContent = address.offer.address;
+  const adsAddress = adsElement.querySelector('.popup__text--address');
+  adsAddress.textContent = element.offer.address;
+  if (!element.offer.address) {
+    adsAddress.remove();
+  }
 
-  const addressTextPrice = addressElement.querySelector('.popup__text--price');
-  addressTextPrice.textContent = `${address.offer.price} ₽/ночь`;
+  const adsPrice = adsElement.querySelector('.popup__text--price');
+  adsPrice.textContent = `${element.offer.price} ₽/ночь`;
+  if (!element.offer.price) {
+    adsPrice.remove();
+  }
 
-  const addressType = addressElement.querySelector('.popup__type');
-  addressType.textContent = typeRu[address.offer.type];
+  const adsType = adsElement.querySelector('.popup__type');
+  adsType.textContent = typeRu[element.offer.type];
+  if (!typeRu[element.offer.type]) {
+    adsType.remove();
+  }
 
-  const addressTextCapacity = addressElement.querySelector('.popup__text--capacity');
-  addressTextCapacity.textContent = `${address.offer.rooms} комнаты для ${address.offer.guests} гостей`;
+  const adsCapacity = adsElement.querySelector('.popup__text--capacity');
+  adsCapacity.textContent = `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`;
+  if (!element.offer.rooms || !element.offer.guests) {
+    adsCapacity.remove();
+  }
 
-  const addressTextTime = addressElement.querySelector('.popup__text--time');
-  addressTextTime.textContent = `Заезд после ${address.offer.checkin}, выезд до ${address.offer.checkout}`;
+  const adsTime = adsElement.querySelector('.popup__text--time');
+  adsTime.textContent = `Заезд после ${element.offer.checkin}, выезд после ${element.offer.checkout}`;
+  if (!element.offer.checkin || !element.offer.checkout) {
+    adsTime.remove();
+  }
 
-  const addressDescription = addressElement.querySelector('.popup__description');
-  addressDescription.textContent = address.offer.description;
+  const adsFeatures = adsElement.querySelector('.popup__features');
+  const modifiers = element.offer.features.map((feature) => `popup__feature--${feature}`);
+  adsFeatures.querySelectorAll('.popup__feature').forEach((classItem) => {
+    const modifier = classItem.classList[1];
+    if (!modifiers.includes(modifier)) {
+      classItem.remove();
+    }
+  });
 
-  const addressPhotos = addressElement.querySelector('.popup__photos');
+  const adsDescription = adsElement.querySelector('.popup__description');
+  adsDescription.textContent = element.offer.description;
+  if (!element.offer.description) {
+    adsDescription.remove();
+  }
 
-  address.offer.photos.forEach((photo) => {
+  const adsPhotos = adsElement.querySelector('.popup__photos');
+  element.offer.photos.forEach((photo) => {
     const photoElement = document.createElement('img');
     photoElement.src = photo;
     photoElement.classList.add('popup__photo');
     photoElement.width = 45;
     photoElement.height = 40;
     photoElement.alt = 'Фотография жилья';
-    addressPhotos.appendChild(photoElement);
+    adsPhotos.appendChild(photoElement);
   });
+  if (!element.offer.photos) {
+    adsPhotos.remove();
+  }
+  return adsElement;
+}
 
-  const addressFeatures = addressElement.querySelector('.popup__features');
-
-  address.offer.features.forEach((feature) => {
-    const featureElement = document.createElement('li');
-    featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
-    addressFeatures.appendChild(featureElement);
-  });
-
-  checkTextContent(addressTitle);
-  checkTextContent(addressTextAddress);
-  checkTextContent(addressTextPrice);
-  checkTextContent(addressType);
-  checkTextContent(addressTextCapacity);
-  checkTextContent(addressTextTime);
-  checkTextContent(addressDescription);
-  checkChildrenElements(addressFeatures);
-  checkChildrenElements(addressPhotos);
-
-  mapCanvas.appendChild(addressElement);
-});
+mapCanvas.appendChild(getAds(similarData[0]));

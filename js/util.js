@@ -50,7 +50,7 @@ function getRandomArray(array) {
   const arrayNew = [];
   let arrayRandomNumber = 0;
 
-  for (let i = 0; i < randomNumber; i++) {
+  for (let i = 1; i < randomNumber; i++) {
     arrayRandomNumber = getRandomNumber(0, arrayClone.length - 1);
     arrayNew[i] = arrayClone[arrayRandomNumber];
     arrayClone.splice(arrayRandomNumber, 1);
@@ -58,24 +58,11 @@ function getRandomArray(array) {
   return arrayNew;
 }
 
-// Проверка на наличие текстового контента внутри элемента.
-// Если текста нет, элемент удаляется.
+// Вырезание/удаление случайного элемента из массива
+// "array" - имя используемого массива.
 
-function checkTextContent(element) {
-  if (element.textContent === '') {
-    element.remove();
-  }
-  return element;
+function cutRandomElement(array) {
+  return array.splice(getRandomNumber(0, array.length - 1), 1);
 }
 
-// Проверка на наличие дочерних элементов в родителе.
-// Если дочерних элементов нет, родитель удаляется.
-
-function checkChildrenElements(parent) {
-  if (parent.children.length === 0) {
-    parent.remove();
-  }
-  return parent;
-}
-
-export {getRandomNumber, getRandomFracter, getRandomArrayElement, getRandomArray, checkTextContent, checkChildrenElements};
+export {getRandomNumber, getRandomFracter, getRandomArrayElement, getRandomArray, cutRandomElement};
