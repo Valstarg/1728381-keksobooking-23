@@ -50,7 +50,7 @@ function getRandomArray(array) {
   const arrayNew = [];
   let arrayRandomNumber = 0;
 
-  for (let i = 0; i < randomNumber; i++) {
+  for (let i = 1; i < randomNumber; i++) {
     arrayRandomNumber = getRandomNumber(0, arrayClone.length - 1);
     arrayNew[i] = arrayClone[arrayRandomNumber];
     arrayClone.splice(arrayRandomNumber, 1);
@@ -58,4 +58,11 @@ function getRandomArray(array) {
   return arrayNew;
 }
 
-export {getRandomNumber, getRandomFracter, getRandomArrayElement, getRandomArray};
+// Вырезание/удаление случайного элемента из массива
+// "array" - имя используемого массива.
+
+function cutRandomElement(array) {
+  return array.splice(getRandomNumber(0, array.length - 1), 1);
+}
+
+export {getRandomNumber, getRandomFracter, getRandomArrayElement, getRandomArray, cutRandomElement};
