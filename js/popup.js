@@ -23,45 +23,59 @@ function getAds(element) {
   const adsElement = similarPopup.cloneNode(true);
 
   const adsAvatar = adsElement.querySelector('.popup__avatar');
-  adsAvatar.src = element.author.avatar;
   if (!element.author.avatar) {
     adsAvatar.remove();
   }
+  else {
+    adsAvatar.src = element.author.avatar;
+  }
 
   const adsTitle = adsElement.querySelector('.popup__title');
-  adsTitle.textContent = element.offer.title;
   if (!element.offer.title) {
     adsTitle.remove();
   }
+  else {
+    adsTitle.textContent = element.offer.title;
+  }
 
   const adsAddress = adsElement.querySelector('.popup__text--address');
-  adsAddress.textContent = element.offer.address;
   if (!element.offer.address) {
     adsAddress.remove();
   }
+  else {
+    adsAddress.textContent = element.offer.address;
+  }
 
   const adsPrice = adsElement.querySelector('.popup__text--price');
-  adsPrice.textContent = `${element.offer.price} ₽/ночь`;
   if (!element.offer.price) {
     adsPrice.remove();
   }
+  else {
+    adsPrice.textContent = `${element.offer.price} ₽/ночь`;
+  }
 
   const adsType = adsElement.querySelector('.popup__type');
-  adsType.textContent = typeRu[element.offer.type];
   if (!typeRu[element.offer.type]) {
     adsType.remove();
   }
+  else {
+    adsType.textContent = typeRu[element.offer.type];
+  }
 
   const adsCapacity = adsElement.querySelector('.popup__text--capacity');
-  adsCapacity.textContent = `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`;
   if (!element.offer.rooms || !element.offer.guests) {
     adsCapacity.remove();
   }
+  else {
+    adsCapacity.textContent = `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`;
+  }
 
   const adsTime = adsElement.querySelector('.popup__text--time');
-  adsTime.textContent = `Заезд после ${element.offer.checkin}, выезд после ${element.offer.checkout}`;
   if (!element.offer.checkin || !element.offer.checkout) {
     adsTime.remove();
+  }
+  else {
+    adsTime.textContent = `Заезд после ${element.offer.checkin}, выезд после ${element.offer.checkout}`;
   }
 
   const adsFeatures = adsElement.querySelector('.popup__features');
@@ -74,23 +88,27 @@ function getAds(element) {
   });
 
   const adsDescription = adsElement.querySelector('.popup__description');
-  adsDescription.textContent = element.offer.description;
   if (!element.offer.description) {
     adsDescription.remove();
   }
+  else {
+    adsDescription.textContent = element.offer.description;
+  }
 
   const adsPhotos = adsElement.querySelector('.popup__photos');
-  element.offer.photos.forEach((photo) => {
-    const photoElement = document.createElement('img');
-    photoElement.src = photo;
-    photoElement.classList.add('popup__photo');
-    photoElement.width = 45;
-    photoElement.height = 40;
-    photoElement.alt = 'Фотография жилья';
-    adsPhotos.appendChild(photoElement);
-  });
   if (!element.offer.photos) {
     adsPhotos.remove();
+  }
+  else {
+    element.offer.photos.forEach((photo) => {
+      const photoElement = document.createElement('img');
+      photoElement.src = photo;
+      photoElement.classList.add('popup__photo');
+      photoElement.width = 45;
+      photoElement.height = 40;
+      photoElement.alt = 'Фотография жилья';
+      adsPhotos.appendChild(photoElement);
+    });
   }
   return adsElement;
 }
