@@ -8,6 +8,9 @@ const titleInput = adForm.querySelector('#title');
 const priceInput = adForm.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
 const numberOfGuest = document.querySelector('#capacity');
+const guestsList = numberOfGuest.querySelectorAll('option');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 const TITLE_MIN = 30;
 const TITLE_MAX = 100;
@@ -42,7 +45,8 @@ function makeActiveForm() {
 }
 makeActiveForm();
 
-// Обработчик событий и валидация форм. Заголовок объявления.
+// Обработчик событий и валидация форм.
+// Заголовок объявления.
 
 titleInput.addEventListener('input', () => {
   const titleLength = titleInput.value.length;
@@ -63,15 +67,47 @@ titleInput.addEventListener('input', () => {
 priceInput.setAttribute('max', PRICE_MAX);
 
 // Колличество комнат и мест.
+// Поправил валидацию, пункты становятся неактивными,а не удаляются.
+// Валидация работает корректно.
 
-const defaultOptions = [...numberOfGuest.options];
-roomNumber.addEventListener('change', function () {
-  const selectedOption = this.options[this.selectedIndex];
-  numberOfGuest.innerHTML = '';
-  if (+selectedOption.value === MAX_ROOMS) {
-    numberOfGuest.append(defaultOptions[3]);
-  }
-  else {
-    numberOfGuest.append(...defaultOptions.filter((option) => option.value <= selectedOption.value & option.value > 0));
+roomNumber.addEventListener('change',()=>{
+  for ( let i=0 ; i < guestsList.length; i++ ){
+    if (Number(roomNumber.value)===MAX_ROOMS) {
+      if (i===4){
+        guestsList[i].selected=true;
+        guestsList[i].disabled=false;
+      } else {
+        guestsList[i].disabled=true;
+      }
+    } else {
+      guestsList[4-Number(roomNumber.value)].selected=true;
+      if (i>=(4-Number(roomNumber.value)) && i<=3){
+        guestsList[i].disabled=false;
+      } else {
+        guestsList[i].disabled=true;
+      }
+    }
   }
 });
+
+// Синхронизация времени заезда и выезда. А синхронизация времени ни во второй части задания должна быть?
+
+timeIn.addEventListener('change', (evt) => {
+  timeOut.value = evt.target.value;
+});
+
+timeOut.addEventListener('change', (evt) => {
+  timeIn.value = evt.target.value;
+});
+
+// Второй вариант синхронизации времени.
+
+/*function timing(first, second) {
+  first.value = second.value;
+}
+timeIn.addEventListener('change', () => {
+  timing(timeOut, timeIn);
+});
+timeOut.addEventListener('change', () => {
+  timing(timeIn, timeOut);
+});*/
