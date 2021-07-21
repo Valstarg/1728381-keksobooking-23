@@ -11,11 +11,20 @@ const numberOfGuest = document.querySelector('#capacity');
 const guestsList = numberOfGuest.querySelectorAll('option');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
+const typeHousing = adForm.querySelector('#type');
 
 const TITLE_MIN = 30;
 const TITLE_MAX = 100;
 const PRICE_MAX = 1000000;
 const MAX_ROOMS = 100;
+
+const minPrice = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
 
 // ФУНКЦИИ.
 
@@ -45,7 +54,7 @@ function makeActiveForm() {
 }
 makeActiveForm();
 
-// Обработчик событий и валидация форм.
+// Обработчик событий и валидация форм. Первая часть ДЗ.
 // Заголовок объявления.
 
 titleInput.addEventListener('input', () => {
@@ -90,7 +99,7 @@ roomNumber.addEventListener('change',()=>{
   }
 });
 
-// Синхронизация времени заезда и выезда. А синхронизация времени ни во второй части задания должна быть?
+// Синхронизация времени заезда и выезда. Вторя часть ДЗ.
 
 timeIn.addEventListener('change', (evt) => {
   timeOut.value = evt.target.value;
@@ -111,3 +120,11 @@ timeIn.addEventListener('change', () => {
 timeOut.addEventListener('change', () => {
   timing(timeIn, timeOut);
 });*/
+
+// Синхронизация типа жилья с ценой за ночь.
+
+typeHousing.addEventListener('change', (evt) => {
+  evt.target.value === typeHousing.value;
+  priceInput.placeholder = minPrice[typeHousing.value];
+  priceInput.min = minPrice[typeHousing.value];
+});
